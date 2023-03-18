@@ -3,22 +3,26 @@
 (require 2htdp/image)
 (require 2htdp/universe)
 
-
-
 ;Varibles globales
 (define initial-board '("" "" ""
                         "" "" ""
                         "" "" ""))
 (define POS -1)
-
 (define PLAYER "X")
-
 (define initial-token 6)
+
+
+
  
 (define (draw-board a)
   (let ((img (rectangle 720 720 'outline (make-color 200 200 200))))
     (set! img
           (overlay img
+
+                  (cond [(and(equal? check-winners #t) (equal? PLAYER "X"))  (place-image (text "Ganaste jugador rojo" 30 "black") 360 600 img)]
+                        [(and(equal? check-winners #t) (equal? PLAYER "O"))  (place-image (text "Ganaste jugador azul" 30 "black") 360 600 img)]
+                         [else (place-image (text "-" 30 "black") 360 600 img)])
+
 
                     (cond [(equal? (list-ref initial-board 0) "X") (place-image (circle 30 "solid" "blue") 180 60 img)]
                          [(equal? (list-ref initial-board 0) "O") (place-image (circle 30 "solid" "red") 180 60 img)]
@@ -76,11 +80,13 @@
                     (place-image (rectangle 5 360 'solid (make-color 0 0 0)) 540 240 img)
                     (place-image (rotate -45 (rectangle 5 509 'solid "black")) 360 240 img)
                     (place-image (rotate 45 (rectangle 5 509 'solid "black")) 360 240 img)))
+
+                     
     img))
 
-  
-  
- 
+
+
+(define check-winners #f)
 ;Funcion que determina el movimiento de la ficha
 (define (handle-mouse s x y event)
   (if (equal? event "button-down")
@@ -303,9 +309,9 @@
   ;Verifica la primera fila
   (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 1)) (equal? (list-ref initial-board 1) (list-ref initial-board 2)))
       (if (equal?(list-ref initial-board 0) "X")
-          (display "Gano el azul en la primera fila") 
+          (set! check-winners #t) 
           (if (equal?(list-ref initial-board 0) "O")
-          (display "Gano el rojo en la primera fila")
+          (set! check-winners #t)
           #f)
           )
       #f
@@ -313,9 +319,9 @@
   ;Verifica la segunda fila 
   (if (and (equal? (list-ref initial-board 3) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 5)))
       (if (equal?(list-ref initial-board 3) "X")
-          (display "Gano el azul en la segunda fila") 
+          (set! check-winners #t) 
           (if (equal?(list-ref initial-board 3) "O")
-          (display "Gano el rojo en la segunda fila")
+          (set! check-winners #t)
           #f)
           )
       #f
@@ -324,20 +330,20 @@
   ;Verifica la tercera fila 
   (if (and (equal? (list-ref initial-board 6) (list-ref initial-board 7)) (equal? (list-ref initial-board 7) (list-ref initial-board 8)))
       (if (equal?(list-ref initial-board 6) "X")
-          (display "Gano el azul en la tercera fila") 
+          (set! check-winners #t)
           (if (equal?(list-ref initial-board 6) "O")
-          (display "Gano el rojo en la tercera fila")
+          (set! check-winners #t)
           #f)
           )
       #f
       )
 
   ;Verifica pimera columna 
-  (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 2)) (equal? (list-ref initial-board 2) (list-ref initial-board 6)))
+  (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 3)) (equal? (list-ref initial-board 2) (list-ref initial-board 6)))
       (if (equal?(list-ref initial-board 0) "X")
-          (display "Gano el azul en la primera columna") 
+          (set! check-winners #t)
           (if (equal?(list-ref initial-board 0) "O")
-          (display "Gano el rojo en la primera columna")
+          (set! check-winners #t)
           #f)
           )
       #f
@@ -345,9 +351,9 @@
   ;Verifica la segunda columna 
   (if (and (equal? (list-ref initial-board 1) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 7)))
       (if (equal?(list-ref initial-board 1) "X")
-          (display "Gano el azul en la primera columna") 
+          (set! check-winners #t)
           (if (equal?(list-ref initial-board 1) "O")
-          (display "Gano el rojo en la primera columna")
+          (set! check-winners #t)
           #f)
           )
       #f
@@ -356,9 +362,9 @@
    ;Verifica la tercera columna 
   (if (and (equal? (list-ref initial-board 2) (list-ref initial-board 5)) (equal? (list-ref initial-board 5) (list-ref initial-board 8)))
       (if (equal?(list-ref initial-board 2) "X")
-          (display "Gano el azul en la primera columna") 
+          (set! check-winners #t) 
           (if (equal?(list-ref initial-board 2) "0")
-          (display "Gano el rojo en la primera columna")
+          (set! check-winners #t)
           #f)
           )
       #f
@@ -367,9 +373,9 @@
   ;Verifica la diagonal derecha 
   (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 8)))
       (if (equal?(list-ref initial-board 0) "X")
-          (display "Gano el azul en la primera columna") 
+          (set! check-winners #t) 
           (if (equal?(list-ref initial-board 0) "0")
-          (display "Gano el rojo en la primera columna")
+          (set! check-winners #t)
           #f)
           )
       #f
@@ -378,9 +384,9 @@
   ;Verifica la diagonal izquierda 
   (if (and (equal? (list-ref initial-board 2) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 6)))
       (if (equal?(list-ref initial-board 2) "X")
-          (display "Gano el azul en la primera columna") 
+          (set! check-winners #t)
           (if (equal?(list-ref initial-board 2) "0")
-          (display "Gano el rojo en la primera columna")
+          (set! check-winners #t)
           #f)
           )
       #f
@@ -388,29 +394,8 @@
   )
  
 
-
-;[(equal? (list-ref initial-board 0) "X") (place-image (circle 30 "solid" "blue") 180 60 img)
-
-
-;(if (and (> numero 5) (< numero 10))
- ;   (cuerda)
-  ;  'otro-valor)
-
-
-
-
-
-;(put-token 0 PLAYER)
-;(put-token 1 PLAYER)
-;(put-token 2 PLAYER)
-;(put-token 3 PLAYER)
-;(put-token 4 PLAYER)
-;(put-token 5 PLAYER)
-;(put-token 6 PLAYER)
-;(put-token 7 PLAYER)
-
 (check-winner)
- (big-bang 0
+ (big-bang #f
     [to-draw draw-board]   ;Se carga la escena inicial
     [on-mouse handle-mouse] ;Eventos con el mouse
   )
