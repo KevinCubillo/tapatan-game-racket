@@ -78,9 +78,9 @@
                     (place-image (rotate 45 (rectangle 5 509 'solid "black")) 360 240 img)))
     img))
 
-
-
   
+  
+ 
 ;Funcion que determina el movimiento de la ficha
 (define (handle-mouse s x y event)
   (if (equal? event "button-down")
@@ -90,202 +90,170 @@
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 0)
+                    (if (not (equal? POS -1)) 
+                        (begin (move POS 0 PLAYER)       
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 0))
+                (if (isEmpty 0)
                     (begin
-                      (set! POS 0))
-                    (if (isEmpty 0)
-                        (begin
-                          (move POS 0 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 0)(begin
-                (put-token 0 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-      
-      ;Fila 0 espacio 1
-      (let ((box-x 360) (box-y 60) (box-w 60) (box-h 60))
+                      (put-token 0 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 360) (box-y 60) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 1)
+                    (if (not (equal? POS -1))
+                        (begin (move POS 1 PLAYER)               
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 1))
+                (if (isEmpty 1)
                     (begin
-                      (set! POS 1))
-                    (if (isEmpty 1)
-                        (begin
-                          (move POS 1 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 1)(begin
-                (put-token 1 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-      
-      ;Fila 0 espacio 2
-      (let ((box-x 540) (box-y 60) (box-w 60) (box-h 60))
+                      (put-token 1 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 540) (box-y 60) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 2)
+                    (if (not (equal? POS -1))
+                        (begin (move POS 2 PLAYER)
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 2))
+                (if (isEmpty 2)
                     (begin
-                      (set! POS 2))
-                    (if (isEmpty 2)
-                        (begin
-                          (move POS 2 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 2)(begin
-                (put-token 2 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-
-      ;Fila 1 espacio 0
-      (let ((box-x 180) (box-y 260) (box-w 60) (box-h 60))
+                      (put-token 2 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 180) (box-y 240) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 3)
+                    (if (not (equal? POS -1))
+                        (begin (move POS 3 PLAYER)  
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 3))
+                (if (isEmpty 3)
                     (begin
-                      (set! POS 3))
-                    (if (isEmpty 3)
-                        (begin
-                          (move POS 3 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 3)(begin
-                (put-token 3 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-
-      ;Fila 1 espacio 1
-      (let ((box-x 360) (box-y 260) (box-w 60) (box-h 60))
+                      (put-token 3 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 360) (box-y 240) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 4)
+                    (if (not (equal? POS -1))
+                        (begin (move POS 4 PLAYER)
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 4))
+                (if (isEmpty 4)
                     (begin
-                      (set! POS 4))
-                    (if (isEmpty 4)
-                        (begin
-                          (move POS 4 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 4)(begin
-                (put-token 4 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-
-      ;Fila 1 espacio 2
-      (let ((box-x 540) (box-y 260) (box-w 60) (box-h 60))
+                      (put-token 4 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 540) (box-y 240) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 5)
+                    (if (not (equal? POS -1))
+                        (begin (move POS 5 PLAYER)
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 5))
+                (if (isEmpty 5)
                     (begin
-                      (set! POS 5))
-                    (if (isEmpty 5)
-                        (begin
-                          (move POS 5 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 5)(begin
-                (put-token 5 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-
-      ;Fila 2 espacio 0
-      (let ((box-x 180) (box-y 420) (box-w 60) (box-h 60))
+                      (put-token 5 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 180) (box-y 420) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 6)
+                    (if (not (equal? POS -1))
+                        (begin (move POS 6 PLAYER)
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 6))
+                (if (isEmpty 6)
                     (begin
-                      (set! POS 6))
-                    (if (isEmpty 6)
-                        (begin
-                          (move POS 6 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 6)(begin
-                (put-token 6 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-
-       ;Fila 2 espacio 1
-      (let ((box-x 360) (box-y 420) (box-w 60) (box-h 60))
+                      (put-token 6 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 360) (box-y 420) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 7)
+                    (if (not (equal? POS -1))
+                        (begin (move POS 7 PLAYER)
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 7))
+                (if (isEmpty 7)
                     (begin
-                      (set! POS 7))
-                    (if (isEmpty 7)
-                        (begin
-                          (move POS 7 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 7)(begin
-                (put-token 7 PLAYER)
-                (change-player))s)
-
-                  )s)
-            ); cierre del let
-
-       ;Fila 2 espacio 2
-      (let ((box-x 540) (box-y 420) (box-w 60) (box-h 60))
+                      (put-token 7 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+        (let ((box-x 540) (box-y 420) (box-w 60) (box-h 60))
         (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                  (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
             (if (equal? initial-token 0)
-                (if (equal? POS -1)
+                (if (isEmpty 8)
+                    (if (not (equal? POS -1))
+                        (begin(move POS 8 PLAYER)
+                         (set! POS -1)
+                        )
+                    s)
+                (set! POS 8))
+                (if (isEmpty 8)
                     (begin
-                      (set! POS 8))
-                    (if (isEmpty 8)
-                        (begin
-                          (move POS 8 PLAYER)
-                          (change-player)
-                          (set! POS -1)
-                          (display "Entra"))
-                        s))
-                (if (isEmpty 8)(begin
-                (put-token 8 PLAYER)
-                (change-player))s)
+                      (put-token 8 PLAYER)
+                    )
+                    s)
+            )s)  
+        ); cierre del let
+    s); cierre del if principal
+  s); cierre de la funcion en si
+)
 
-                  )s)
-            ); cierre del let
 
-      s); cierre del if principal
-      s); cierre de la funcion en si
-  )
+        
              
 ;Funcion que cambia un elemento de una lista
 (define (modify-list lst index new-value)
@@ -297,9 +265,15 @@
 
 ;Funcion que mueve una ficha de una poscion a otra
 (define (move oldpos newpos player)
-  (set! initial-board (modify-list initial-board newpos player))
-  (set! initial-board (modify-list initial-board oldpos ""))
-  (check-winner)
+  (if (equal? (list-ref initial-board oldpos) PLAYER)
+      (begin  (set! initial-board (modify-list initial-board newpos player))
+              (set! initial-board (modify-list initial-board oldpos ""))
+              (check-winner)
+              (change-player)
+       )
+       #f
+  )
+  
 )
 
 ;Colocar ficha
@@ -307,6 +281,7 @@
   (set! initial-token(- initial-token 1))
   (set! initial-board (modify-list initial-board pos player))
   (check-winner)
+  (change-player)
 )
 
 ;Es posicion vacia
