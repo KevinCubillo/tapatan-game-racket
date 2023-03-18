@@ -82,8 +82,6 @@
 
   
 ;Funcion que determina el movimiento de la ficha
-  
-
 (define (handle-mouse s x y event)
   (if (equal? event "button-down")
       (begin
@@ -301,11 +299,14 @@
 (define (move oldpos newpos player)
   (set! initial-board (modify-list initial-board newpos player))
   (set! initial-board (modify-list initial-board oldpos ""))
+  (check-winner)
 )
 
 ;Colocar ficha
 (define (put-token pos player)
-    (set! initial-board (modify-list initial-board pos player)) 
+  (set! initial-token(- initial-token 1))
+  (set! initial-board (modify-list initial-board pos player))
+  (check-winner)
 )
 
 ;Es posicion vacia
