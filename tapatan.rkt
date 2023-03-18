@@ -6,14 +6,15 @@
 
 
 ;Varibles globales
-(define initial-board '("" "X" ""
+(define initial-board '("" "" ""
                         "" "" ""
                         "" "" ""))
 (define POS -1)
+
 (define PLAYER "X")
 
-
-
+(define initial-token 6)
+ 
 (define (draw-board a)
   (let ((img (rectangle 720 720 'outline (make-color 200 200 200))))
     (set! img
@@ -85,7 +86,7 @@
    
   (if (equal? event "button-down")
       (begin
-        (let ((box-x 180) (box-y 60) (box-w 40) (box-h 40))
+        (let ((box-x 180) (box-y 60) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -96,7 +97,7 @@
               )
         s))
 
-        (let ((box-x 360) (box-y 60) (box-w 40) (box-h 40))
+        (let ((box-x 360) (box-y 60) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -106,7 +107,7 @@
                     s)
               )
         s))
-        (let ((box-x 540) (box-y 60) (box-w 40) (box-h 40))
+        (let ((box-x 540) (box-y 60) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -116,7 +117,7 @@
                     s)
               )
         s))
-        (let ((box-x 180) (box-y 240) (box-w 40) (box-h 40))
+        (let ((box-x 180) (box-y 260) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -126,7 +127,7 @@
                     s)
               )
         s))
-        (let ((box-x 360) (box-y 240) (box-w 40) (box-h 40))
+        (let ((box-x 360) (box-y 260) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -136,7 +137,7 @@
                     s)
               )
         s))
-        (let ((box-x 540) (box-y 240) (box-w 40) (box-h 40))
+        (let ((box-x 540) (box-y 260) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -146,7 +147,7 @@
                     s)
               )
         s))
-        (let ((box-x 180) (box-y 420) (box-w 40) (box-h 40))
+        (let ((box-x 180) (box-y 420) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -156,7 +157,7 @@
                     s)
               )
         s))
-        (let ((box-x 360) (box-y 420) (box-w 40) (box-h 40))
+        (let ((box-x 360) (box-y 420) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -166,7 +167,7 @@
                     s)
               )
         s))
-        (let ((box-x 540) (box-y 420) (box-w 40) (box-h 40))
+        (let ((box-x 540) (box-y 420) (box-w 60) (box-h 60))
           (if (and (>= x (- box-x (/ box-w 2))) (<= x (+ box-x (/ box-w 2)))
                    (>= y (- box-y (/ box-h 2))) (<= y (+ box-y (/ box-h 2))))
               (if (equal? POS -1)
@@ -180,7 +181,6 @@
       s
     )
  )
-
 
              
 ;Funcion que cambia un elemento de una lista
@@ -197,6 +197,16 @@
   (set! initial-board (modify-list initial-board oldpos ""))
 )
 
+;Colocar ficha
+(define (put-token pos player)
+  (if (not (equal? initial-token 0))
+      (begin
+        (set! initial-board (modify-list initial-board pos player))
+        (change-player)
+        (set! initial-token (- initial-token 1))
+        (display "ficha colocada"))  ; retornar true si se ejecutan las acciones dentro del if
+      (display "ficha no colocada")))  ; retornar false si no se ejecuta el if
+
 ;Es posicion vacia
 (define(isEmpty pos)
     (cond [(equal? (list-ref initial-board pos) "")]
@@ -210,7 +220,119 @@
      (set! PLAYER "X"))
  )
 
+;Funcion para verificar si alguien gano en el tablero
 
+(define(check-winner)
+  ;Verifica la primera fila
+  (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 1)) (equal? (list-ref initial-board 1) (list-ref initial-board 2)))
+      (if (equal?(list-ref initial-board 0) "X")
+          (display "Gano el azul en la primera fila") 
+          (if (equal?(list-ref initial-board 0) "O")
+          (display "Gano el rojo en la primera fila")
+          #f)
+          )
+      #f
+      )
+  ;Verifica la segunda fila 
+  (if (and (equal? (list-ref initial-board 3) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 5)))
+      (if (equal?(list-ref initial-board 3) "X")
+          (display "Gano el azul en la segunda fila") 
+          (if (equal?(list-ref initial-board 3) "O")
+          (display "Gano el rojo en la segunda fila")
+          #f)
+          )
+      #f
+      )
+
+  ;Verifica la tercera fila 
+  (if (and (equal? (list-ref initial-board 6) (list-ref initial-board 7)) (equal? (list-ref initial-board 7) (list-ref initial-board 8)))
+      (if (equal?(list-ref initial-board 6) "X")
+          (display "Gano el azul en la tercera fila") 
+          (if (equal?(list-ref initial-board 6) "O")
+          (display "Gano el rojo en la tercera fila")
+          #f)
+          )
+      #f
+      )
+
+  ;Verifica pimera columna 
+  (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 2)) (equal? (list-ref initial-board 2) (list-ref initial-board 6)))
+      (if (equal?(list-ref initial-board 0) "X")
+          (display "Gano el azul en la primera columna") 
+          (if (equal?(list-ref initial-board 0) "O")
+          (display "Gano el rojo en la primera columna")
+          #f)
+          )
+      #f
+      )
+  ;Verifica la segunda columna 
+  (if (and (equal? (list-ref initial-board 1) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 7)))
+      (if (equal?(list-ref initial-board 1) "X")
+          (display "Gano el azul en la primera columna") 
+          (if (equal?(list-ref initial-board 1) "O")
+          (display "Gano el rojo en la primera columna")
+          #f)
+          )
+      #f
+      )
+
+   ;Verifica la tercera columna 
+  (if (and (equal? (list-ref initial-board 2) (list-ref initial-board 5)) (equal? (list-ref initial-board 5) (list-ref initial-board 8)))
+      (if (equal?(list-ref initial-board 2) "X")
+          (display "Gano el azul en la primera columna") 
+          (if (equal?(list-ref initial-board 2) "0")
+          (display "Gano el rojo en la primera columna")
+          #f)
+          )
+      #f
+      )
+
+  ;Verifica la diagonal derecha 
+  (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 8)))
+      (if (equal?(list-ref initial-board 0) "X")
+          (display "Gano el azul en la primera columna") 
+          (if (equal?(list-ref initial-board 0) "0")
+          (display "Gano el rojo en la primera columna")
+          #f)
+          )
+      #f
+      )
+
+  ;Verifica la diagonal izquierda 
+  (if (and (equal? (list-ref initial-board 2) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 6)))
+      (if (equal?(list-ref initial-board 2) "X")
+          (display "Gano el azul en la primera columna") 
+          (if (equal?(list-ref initial-board 2) "0")
+          (display "Gano el rojo en la primera columna")
+          #f)
+          )
+      #f
+      )
+  )
+ 
+
+
+;[(equal? (list-ref initial-board 0) "X") (place-image (circle 30 "solid" "blue") 180 60 img)
+
+
+;(if (and (> numero 5) (< numero 10))
+ ;   (cuerda)
+  ;  'otro-valor)
+
+
+
+
+
+;(put-token 0 PLAYER)
+;(put-token 1 PLAYER)
+;(put-token 2 PLAYER)
+;(put-token 3 PLAYER)
+;(put-token 4 PLAYER)
+;(put-token 5 PLAYER)
+;(put-token 6 PLAYER)
+;(put-token 7 PLAYER)
+
+(check-winner)
  (big-bang 0
     [to-draw draw-board]   ;Se carga la escena inicial
     [on-mouse handle-mouse] ;Eventos con el mouse
