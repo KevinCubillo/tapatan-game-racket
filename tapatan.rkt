@@ -404,9 +404,16 @@
       )
   )
  
+(define (set-player s key)
+    (display "Hello, world!")   
+  (cond
+    ((key=? key "1") (set! PLAYER "X"))
+    ((key=? key "2") (set! PLAYER "O"))))
+
 
 (check-winner)
- (big-bang #f
+ (big-bang 0
     [to-draw draw-board]   ;Se carga la escena inicial
     [on-mouse handle-mouse] ;Eventos con el mouse
+    [on-key set-player]     ;Eventos con el teclado
   )
