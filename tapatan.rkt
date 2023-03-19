@@ -270,17 +270,28 @@
 
 
 ;Funcion que mueve una ficha de una poscion a otra
+(define (adjacent-cells index)
+  (cond ((= index 0) '(1 3 4))
+        ((= index 1) '(0 2 3 4 5))
+        ((= index 2) '(1 4 5))
+        ((= index 3) '(0 1 4 6 7))
+        ((= index 4) '(0 1 2 3 5 6 7 8))
+        ((= index 5) '(1 2 4 7 8))
+        ((= index 6) '(3 4 7))
+        ((= index 7) '(3 4 5 6 8))
+        ((= index 8) '(4 5 7))
+        (else '())))
+
 (define (move oldpos newpos player)
-  (if (equal? (list-ref initial-board oldpos) PLAYER)
-      (begin  (set! initial-board (modify-list initial-board newpos player))
-              (set! initial-board (modify-list initial-board oldpos ""))
-              (check-winner)
-              (change-player)
-       )
-       #f
-  )
-  
-)
+  (if (equal? (list-ref initial-board oldpos) player)
+      (let ((adj-cells (adjacent-cells oldpos)))
+        (if (member newpos adj-cells)
+            (begin  (set! initial-board (modify-list initial-board newpos player))
+                    (set! initial-board (modify-list initial-board oldpos ""))
+                    (check-winner)
+                    (change-player))
+            #f))
+      #f))
 
 ;Colocar ficha
 (define (put-token pos player)
@@ -339,7 +350,7 @@
       )
 
   ;Verifica pimera columna 
-  (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 3)) (equal? (list-ref initial-board 2) (list-ref initial-board 6)))
+  (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 3)) (equal? (list-ref initial-board 3) (list-ref initial-board 6)))
       (if (equal?(list-ref initial-board 0) "X")
           (set! check-winners #t)
           (if (equal?(list-ref initial-board 0) "O")
