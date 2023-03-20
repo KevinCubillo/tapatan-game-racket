@@ -24,8 +24,8 @@
                    (cond [(equal? initial-token 6) (place-image (text "tecla 1: inicia el jugador azul \n \n tecla 2: inicia el jugador rojo" 25 "black") 360 600 img)]
                         [else (place-image (text "" 15 "black") 360 660 img)]) ;Muestra el mensaje inicial para seleccionar el jugador que inicia
 
-                  (cond [(and(equal? check-winners #t) (equal? PLAYER "X"))  (place-image (text "!Ganaste jugador rojo!" 30 "black") 360 600 img)]
-                        [(and(equal? check-winners #t) (equal? PLAYER "O"))  (place-image (text "!Ganaste jugador azul" 30 "black") 360 600 img)]
+                  (cond [(and(equal? check-winners #t) (equal? PLAYER "X"))  (place-image (text "¡Ganaste jugador rojo!" 30 "black") 360 600 img)]
+                        [(and(equal? check-winners #t) (equal? PLAYER "O"))  (place-image (text "¡Ganaste jugador azul!" 30 "black") 360 600 img)]
                          [else (place-image (text "" 30 "black") 360 600 img)]) ;Mensaje si algun jugador gana
                   
                   
@@ -374,7 +374,7 @@
   (if (and (equal? (list-ref initial-board 2) (list-ref initial-board 5)) (equal? (list-ref initial-board 5) (list-ref initial-board 8)))
       (if (equal?(list-ref initial-board 2) "X")
           (set! check-winners #t) 
-          (if (equal?(list-ref initial-board 2) "0")
+          (if (equal?(list-ref initial-board 2) "O")
           (set! check-winners #t)
           #f)
           )
@@ -384,7 +384,7 @@
   (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 8)))
       (if (equal?(list-ref initial-board 0) "X")
           (set! check-winners #t) 
-          (if (equal?(list-ref initial-board 0) "0")
+          (if (equal?(list-ref initial-board 0) "O")
           (set! check-winners #t)
           #f)
           )
@@ -394,7 +394,7 @@
   (if (and (equal? (list-ref initial-board 2) (list-ref initial-board 4)) (equal? (list-ref initial-board 4) (list-ref initial-board 6)))
       (if (equal?(list-ref initial-board 2) "X")
           (set! check-winners #t)
-          (if (equal?(list-ref initial-board 2) "0")
+          (if (equal?(list-ref initial-board 2) "O")
           (set! check-winners #t)
           #f)
           )
