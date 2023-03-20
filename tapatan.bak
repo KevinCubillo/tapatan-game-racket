@@ -1,11 +1,5 @@
-; Juego de Tapatan. Creado por: Kevin Cubillo y Brandon Retana
 
-; Al ejecutar el programa se desplegará una ventana con el tablero de tapatan y un mensaje que dice "tecla 1: incia el jugador azul, tecla 2: incia el jugador rojo".
-; En este punto podemos seleccionar el jugador que va a iniciar. Una vez hecho esto los jugadores puden empezar a poner sus fichas dependiendo del turno, esto hasta que
-; alguno alcance formar 3 en linea o hasta que se acaben las fichas, en cuyo caso se podran mover las fichas colocadas a las celdas cercanas siempre que esten vacias,
-; buscando formar 3 en linea y de esta forma ganar el juego. Cuando un jugador gana se muestra un mensaje de "!Ganaste jugador rojo!" o "!Ganaste jugador azul" dependiendo del ganador.
-; El tablero se bloqueará y para finalizar la ejecuión del programa se deberá cerrar la ventana.
-
+;Juego de Tapatan. Creado por: Kevin Cubillo y Brandon Retana
 #lang racket
 (require 2htdp/image)
 (require 2htdp/universe)
@@ -21,8 +15,7 @@
 
 
 
-; Funcion que muestra el estado del juego. Entradas: ninguna. Salidas: despliegue de la ventana con el tablero. Esta funcion muestra el estado actual
-; de la partida, asi como mensajes para los jugadores. Utiliza la variable global initial-board para saber las posiciones de las fichas en el tablero.
+;Funcion que muestra el estado del juego
 (define (draw-board a)
   (let ((img (rectangle 720 720 'outline (make-color 200 200 200))))
     (set! img
@@ -94,11 +87,10 @@
                     (place-image (rotate -45 (rectangle 5 509 'solid "black")) 360 240 img)
                     (place-image (rotate 45 (rectangle 5 509 'solid "black")) 360 240 img))) ;Dibuja las rayas diagonales del tablero               
     img))
+
+
+;Funcion que determina la celda en la que se va a colocar una ficha
 (define check-winners #f)
-
-
-; Funcion que determina la celda en la que se va a colocar una ficha. Entradas coordenas (x,y) capturadas al hacer click. Salida: ninguna(indirectamente modifica el initial-board)
-; Comprueba que el click de haya dado en una posicion valida, y de ser asi determina si es posible o no realizar la jugada.
 (define (handle-mouse s x y event)
   (if (equal? event "button-down")
       (begin
@@ -269,7 +261,7 @@
 )
 
           
-;Funcion que reemplaza un elemento de una lista. Entradas: una lista, un indice y el valor a setear. Salida: la lista modificada. 
+;Funcion que reemplaza un elemento de una lista
 (define (modify-list lst index new-value)
   (cond
     [(empty? lst) '()]
@@ -277,20 +269,21 @@
     [else (cons (car lst) (modify-list (cdr lst) (- index 1) new-value))]))
 
 
-;Funcion auxiliar de move, la cual determina las posiciones validas de movimiento. Entrada: El indice de la posicion. Salida: una lista con las celdas adyacentes.
+;Funcion auxiliar de move, la cual determina las posiciones validas de movimiento
 (define (adjacent-cells index)
   (cond ((= index 0) '(1 3 4))
-        ((= index 1) '(0 2 4))
+        ((= index 1) '(0 2 3 4 5))
         ((= index 2) '(1 4 5))
-        ((= index 3) '(0 4 6))
+        ((= index 3) '(0 1 4 6 7))
         ((= index 4) '(0 1 2 3 5 6 7 8))
-        ((= index 5) '(2 4 8))
+        ((= index 5) '(1 2 4 7 8))
         ((= index 6) '(3 4 7))
-        ((= index 7) '(4 6 8))
+        ((= index 7) '(3 4 5 6 8))
         ((= index 8) '(4 5 7))
         (else '())))
 
-;Funcion que mueve una ficha de una poscion a otra. Entradas: La poscion actual, la posicion a desplazarse, el jugador actual. Salidas ninguna(modifica el initial-board).
+
+;Funcion que mueve una ficha de una poscion a otra
 (define (move oldpos newpos player)
   (if (equal? check-winners #t) #f (if (equal? (list-ref initial-board oldpos) player); Si no hay ganador continua con el movimiento
       (let ((adj-cells (adjacent-cells oldpos)))
@@ -304,7 +297,7 @@
   )
   
  
-;Funcion que coloca una ficha en una celda . Entradas: la poscion a colocar la ficha y el jugador actual. Salidas ninguna(modifica el initial-board).
+;Funcion que coloca una ficha en una celda 
 (define (put-token pos player)
   (set! initial-token(- initial-token 1)); Disminuye la cantidad de fichas disponibles
   (set! initial-board (modify-list initial-board pos player)); Coloca la ficha en el tablero
@@ -312,21 +305,20 @@
   (change-player); Cambia el jugador actual
 )
 
-;Funcion que determina si una celda está vacia. Entrada: la poscion a comprobar. Salida: True si está vacia y False si no.
+;Funcion que determina si una celda está vacia
 (define(isEmpty pos)
     (cond [(equal? (list-ref initial-board pos) "")]
      [else #f]))
 
 
-;Funcion que cambia el jugador actual. Entrada: ninguna. Salida: ninguna(mofica la variable global PLAYER)
+;Funcion que cambia el jugador actual
 (define (change-player)
  (if (equal? PLAYER "X")
      (set! PLAYER "O")
      (set! PLAYER "X"))
  )
 
-;Funcion para verificar si alguien ganó el juego. Entrada: ninguna. Salida: ninguna(modifica la variable global check-winners).
-; Busca en todas las posiciones posibles que hayan 3 fichas del mismo color alineadas, si las encuentra actualiza el valor de check-winners.
+;Funcion para verificar si alguien gano en el juego
 (define(check-winner)
   ;Verifica la primera fila
   (if (and (equal? (list-ref initial-board 0) (list-ref initial-board 1)) (equal? (list-ref initial-board 1) (list-ref initial-board 2)))
@@ -410,8 +402,7 @@
       )
   )
 
-;Funcion que establece el jugador que inicia la partida al presionar la techa 1 o 2. Entradas: la tecla presionada. Salida: ninguna(modifica el valor de la variable global PLAYER, seteando el jugador seleccionado).
-
+;Funcion que establece el jugador que inicia la partida al presionar la techa 1 o 2.
 (define (set-player s key)
  (if (equal? initial-token 6) 
      (if (key=? key "1") (set! PLAYER "X") 
@@ -420,7 +411,7 @@
 )
 
 
-;Funcion Big-bang. Entradas: ninguna. Salidas: ninguna. Función principal de la biblioteca de graficos para racket big-bang.
+;Funcion Big-bang 
  (big-bang 0
     [to-draw draw-board]   ;Se carga la escena inicial
     [on-mouse handle-mouse] ;Eventos con el mouse
