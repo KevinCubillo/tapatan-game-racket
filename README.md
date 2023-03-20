@@ -1,1 +1,6 @@
-# tapatan-game-racket
+# Tapatan Game
+
+## Juego creado por:
+
+* Brandon Retana 
+* Kevin Cubillo 
