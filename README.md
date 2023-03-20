@@ -1,6 +1,6 @@
 # Tapatan Game
 
-## Juego creado por:
+## Juego implementado por:
 
 * Brandon Retana 
 * Kevin Cubillo 
